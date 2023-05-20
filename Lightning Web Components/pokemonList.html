@@ -1,0 +1,41 @@
+<template>
+    <lightning-card>
+        <template if:true={pokemons.data}>
+            <lightning-input type="text" placeholder="Search by Name: " onchange={handleNameSearch} value={nameSearchKey}></lightning-input>
+            <br>
+            <lightning-combobox
+                name="types"
+                label="Search by Type: "
+                options={options}
+                value={selectedType}
+                onchange={handleTypeChange}
+            >
+            </lightning-combobox>
+            <br>
+            <lightning-combobox
+                name="generation"
+                label="Search by Generation: "
+                options={optionsGen}
+                value={selectedGen}
+                onchange={handleGenChange}
+            >
+            </lightning-combobox>
+            <br>
+            <lightning-button label="Select All" onclick={selectAll}></lightning-button>
+            <br><br>
+            <template if:true={count}>Results found: {count}</template>
+            <br><br>            
+            <lightning-layout multiple-rows>
+                <template for:each={filteredData} for:item="pokemon">
+                    <lightning-layout-item key={pokemon.ExtId__c} size="1/8" class="slds-box slds-theme_shade, slds-m-around_x-small">
+                            <img src={pokemon.Image__c} onclick={handleClick} data-recordid={pokemon.Id} class="pokemon-img"/>
+                            <div>Id: {pokemon.ExtId__c}</div>
+                            <div class="slds-text-heading_small">Name: {pokemon.Name}</div>
+                            <lightning-badge label={pokemon.Types__c} class="slds-m-around_xxx-small"></lightning-badge>
+                            <div>Generation: {pokemon.Generacion__c}</div>
+                        </lightning-layout-item>
+                </template>
+            </lightning-layout>          
+        </template>
+    </lightning-card>
+</template>
